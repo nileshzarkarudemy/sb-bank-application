@@ -1,23 +1,22 @@
 package com.eazybytes.accounts.model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter @Setter @ToString
-public class Customer {
-
+@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
+public class Customer extends BaseEntity{
     @Column(name = "customer_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
     @Column(name = "name")
     private String name;
@@ -25,6 +24,4 @@ public class Customer {
     private String email;
     @Column(name = "mobile_number")
     private String mobileNumber;
-    @Column(name = "create_dt")
-    private LocalDate createDt;
 }
