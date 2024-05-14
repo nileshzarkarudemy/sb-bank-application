@@ -1,6 +1,5 @@
 package com.eazybytes.accounts.mapper;
 
-import java.time.LocalDateTime;
 
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.entity.Customer;
@@ -18,8 +17,6 @@ public class CustomerMapper {
         customer.setName(customerDto.getName());
         customer.setEmail(customerDto.getEmail());
         customer.setMobileNumber(customerDto.getMobileNumber());
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("ADMIN");
         return customer;
     }
 
