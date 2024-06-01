@@ -1,6 +1,8 @@
 package com.eazybytes.accounts.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -35,6 +37,9 @@ public class AccountsController {
 
     @Value("${build.version}")
     private String buildVersion;
+
+    @Autowired
+    private Environment environment;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
@@ -88,5 +93,12 @@ public class AccountsController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(buildVersion);
+    }
+
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(environment.getProperty("JAVA_HOME"));
     }
 }
