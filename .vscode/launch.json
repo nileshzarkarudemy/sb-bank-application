@@ -1,0 +1,53 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "AccountsApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.accounts.AccountsApplication",
+            "projectName": "accounts",
+            "env": {
+                "spring.profiles.active": "prod",
+                "build.version": "9.7"
+            }
+        },
+        {
+            "type": "java",
+            "name": "CardsApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.cards.CardsApplication",
+            "projectName": "cards"
+        },
+        {
+            "type": "java",
+            "name": "DockerComposeApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.docker_compose.DockerComposeApplication",
+            "projectName": "docker-compose"
+        },
+        {
+            "type": "java",
+            "name": "HelloApplication",
+            "request": "launch",
+            "mainClass": "com.example.hello.HelloApplication",
+            "projectName": "hello"
+        },
+        {
+            "type": "java",
+            "name": "LoansApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.loans.LoansApplication",
+            "projectName": "loans"
+        }
+    ]
+}
