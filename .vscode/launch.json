@@ -15,11 +15,7 @@
             "name": "AccountsApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.accounts.AccountsApplication",
-            "projectName": "accounts",
-            "env": {
-                "spring.profiles.active": "prod",
-                "build.version": "9.7"
-            }
+            "projectName": "accounts"
         },
         {
             "type": "java",
