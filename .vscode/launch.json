@@ -30,7 +30,8 @@
             "name": "CardsApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.cards.CardsApplication",
-            "projectName": "cards"
+            "projectName": "cards",
+            "args": "--spring.profiles.active=qa"
         },
         {
             "type": "java",
@@ -51,7 +52,8 @@
             "name": "LoansApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.loans.LoansApplication",
-            "projectName": "loans"
+            "projectName": "loans",
+            "args": "--spring.profiles.active=qa"
         }
     ]
 }
