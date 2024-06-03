@@ -22,7 +22,8 @@
             "name": "AccountsApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.accounts.AccountsApplication",
-            "projectName": "accounts"
+            "projectName": "accounts",
+            "args": "--spring.profiles.active=qa"
         },
         {
             "type": "java",
