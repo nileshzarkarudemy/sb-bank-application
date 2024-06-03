@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ConfigserverApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.configserver.ConfigserverApplication",
+            "projectName": "configserver"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
