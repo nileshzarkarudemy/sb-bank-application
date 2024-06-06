@@ -36,9 +36,6 @@ public class AccountsController {
         this.iAccountsService = iAccountsService;
     }
 
-    @Value("${build.version}")
-    private String buildVersion;
-
     @Autowired
     private Environment environment;
 
@@ -91,13 +88,6 @@ public class AccountsController {
         }
     } 
 
-
-    @GetMapping("/build-info")
-    public ResponseEntity<String> getBuildInfo() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(buildVersion);
-    }
 
     @GetMapping("/java-version")
     public ResponseEntity<String> getJavaVersion() {

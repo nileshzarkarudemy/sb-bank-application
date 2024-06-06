@@ -104,7 +104,7 @@
 					<image>nileshzarkar/${project.artifactId}:s6</image>
 				  </to>
 				</configuration>
-			  </plugin>
+			</plugin>
 		</plugins>
 	</build>
 
