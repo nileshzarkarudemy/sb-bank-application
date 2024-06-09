@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "EurekaApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.eureka.EurekaApplication",
+            "projectName": "eureka"
+        },
+        {
+            "type": "java",
             "name": "ConfigserverApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.configserver.ConfigserverApplication",
@@ -35,6 +42,14 @@
         },
         {
             "type": "java",
+            "name": "LoansApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.loans.LoansApplication",
+            "projectName": "loans",
+            "args": "--spring.profiles.active=qa"
+        },
+        {
+            "type": "java",
             "name": "DockerComposeApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.docker_compose.DockerComposeApplication",
@@ -46,14 +61,6 @@
             "request": "launch",
             "mainClass": "com.example.hello.HelloApplication",
             "projectName": "hello"
-        },
-        {
-            "type": "java",
-            "name": "LoansApplication",
-            "request": "launch",
-            "mainClass": "com.eazybytes.loans.LoansApplication",
-            "projectName": "loans",
-            "args": "--spring.profiles.active=qa"
         }
     ]
 }
