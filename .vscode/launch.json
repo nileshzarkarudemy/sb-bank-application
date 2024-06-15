@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GatewayserverApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.gatewayserver.GatewayserverApplication",
+            "projectName": "gatewayserver"
+        },
+        {
+            "type": "java",
             "name": "EurekaApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.eureka.EurekaApplication",
