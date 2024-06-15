@@ -29,3 +29,4 @@ services:
         condition: service_healthy
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      SPRING_H2_CONSOLE_SETTINGS_WEBALLOW-OTHERS: true
