@@ -96,9 +96,12 @@ public class LoansController {
 
     @GetMapping("/contact-info")
     public ResponseEntity<LoansContactInfoDto> getContactInfo() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(loansContactInfoDto);
+        System.out.println("Invoked API Contact Info");
+        // below exception is to test retry mechanism
+        //throw new RuntimeException("Error in API Contact Info");
+         return ResponseEntity
+                 .status(HttpStatus.OK)
+                 .body(loansContactInfoDto);
     }
 
 
