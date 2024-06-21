@@ -1,5 +1,7 @@
 package com.eazybytes.accounts.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -21,6 +23,7 @@ import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 
@@ -29,6 +32,8 @@ import jakarta.validation.constraints.Pattern;
 @RequestMapping(path = "/api", produces = "application/json")
 @Validated
 public class AccountsController {
+
+     private static final Logger logger = LoggerFactory.getLogger(AccountsController.class);
 
     private final IAccountsService iAccountsService;
 
@@ -89,12 +94,23 @@ public class AccountsController {
     } 
 
 
+    @Retry(name = "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/java-version")
     public ResponseEntity<String> getJavaVersion() {
+        //System.out.println("Invoked getJavaVersion");
+        //throw new NullPointerException();
+         return ResponseEntity
+                 .status(HttpStatus.OK)
+                 .body(environment.getProperty("JAVA_HOME"));
+    }
+
+    public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
+        System.out.println("Invoked getJavaVersionFallback" + throwable.getMessage());
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(environment.getProperty("JAVA_HOME"));
+                .body("Java 21");
     }
+
 
     @GetMapping("/contact-info")
     public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
