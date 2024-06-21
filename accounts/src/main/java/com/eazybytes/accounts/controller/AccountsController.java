@@ -1,9 +1,10 @@
 package com.eazybytes.accounts.controller;
 
+import java.util.concurrent.TimeoutException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,19 +97,20 @@ public class AccountsController {
 
     @Retry(name = "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/java-version")
-    public ResponseEntity<String> getJavaVersion() {
-        //System.out.println("Invoked getJavaVersion");
+    public ResponseEntity<String> getJavaVersion() throws TimeoutException{
+        System.out.println("Invoked getJavaVersion");
         //throw new NullPointerException();
-         return ResponseEntity
-                 .status(HttpStatus.OK)
-                 .body(environment.getProperty("JAVA_HOME"));
+        //throw new TimeoutException();
+          return ResponseEntity
+                  .status(HttpStatus.OK)
+                  .body(environment.getProperty("JAVA_HOME"));
     }
 
     public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
         System.out.println("Invoked getJavaVersionFallback" + throwable.getMessage());
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body("Java 21");
+         return ResponseEntity
+                 .status(HttpStatus.OK)
+                 .body("Java 21");
     }
 
 

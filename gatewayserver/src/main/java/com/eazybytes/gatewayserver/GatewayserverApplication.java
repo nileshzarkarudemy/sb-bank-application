@@ -2,6 +2,7 @@ package com.eazybytes.gatewayserver;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeoutException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,7 @@ public class GatewayserverApplication {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Bean
 	public RouteLocator eazyBankRouteConfig(RouteLocatorBuilder routeLocatorBuilder){
 		return routeLocatorBuilder.routes()
@@ -38,7 +40,8 @@ public class GatewayserverApplication {
 				.route(p -> p.path("/eazybank/loans/**")
 				.filters(f -> f.rewritePath("/eazybank/loans/(?<segment>.*)", "/${segment}")
 							   .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
-							   .retry(retryConfig -> retryConfig.setRetries(3).setMethods(HttpMethod.GET)
+							   .retry(retryConfig -> retryConfig.setRetries(3)
+							   .setMethods(HttpMethod.GET)
 							   .setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true)))
 				.uri("lb://LOANS"))
 				.route(p -> p.path("/eazybank/cards/**")
