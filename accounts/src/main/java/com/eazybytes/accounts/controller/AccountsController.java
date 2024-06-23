@@ -24,6 +24,7 @@ import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -114,10 +115,22 @@ public class AccountsController {
     }
 
 
+    
+
+    @RateLimiter(name = "getContactInfo", fallbackMethod = "getContactInfoFallBack")
     @GetMapping("/contact-info")
     public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(accountsContactInfoDto);
+    }
+
+    
+    public ResponseEntity<AccountsContactInfoDto> getContactInfoFallBack(Throwable throwable) {
+        AccountsContactInfoDto aidto  = new AccountsContactInfoDto();
+        aidto.setMessage("Dummy Message");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(aidto);
     }
 }
