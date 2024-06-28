@@ -51,6 +51,11 @@ public class AccountsController {
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
+        logger.trace("createAccount A TRACE Message");
+        logger.debug("createAccount A DEBUG Message");
+        logger.info("createAccount An INFO Message");
+        logger.warn("createAccount A WARN Message");
+        logger.error("createAccount An ERROR Message");
          iAccountsService.createAccount(customerDto);
         return ResponseEntity
                .status(HttpStatus.CREATED)
@@ -61,6 +66,7 @@ public class AccountsController {
     public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam 
                                                            @Pattern(regexp = "($|[0-9]{10})", message = "Mobile number should be 10 digits value") 
                                                            String mobileNumber) { 
+
         CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
@@ -96,7 +102,7 @@ public class AccountsController {
     } 
 
 
-    @Retry(name = "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
+   // @Retry(name = "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/java-version")
     public ResponseEntity<String> getJavaVersion() throws TimeoutException{
         System.out.println("Invoked getJavaVersion");
@@ -107,17 +113,17 @@ public class AccountsController {
                   .body(environment.getProperty("JAVA_HOME"));
     }
 
-    public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
-        System.out.println("Invoked getJavaVersionFallback" + throwable.getMessage());
-         return ResponseEntity
-                 .status(HttpStatus.OK)
-                 .body("Java 21");
-    }
+    // public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
+    //     System.out.println("Invoked getJavaVersionFallback" + throwable.getMessage());
+    //      return ResponseEntity
+    //              .status(HttpStatus.OK)
+    //              .body("Java 21");
+    // }
 
 
     
 
-    @RateLimiter(name = "getContactInfo", fallbackMethod = "getContactInfoFallBack")
+    //@RateLimiter(name = "getContactInfo", fallbackMethod = "getContactInfoFallBack")
     @GetMapping("/contact-info")
     public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
         return ResponseEntity
@@ -126,11 +132,11 @@ public class AccountsController {
     }
 
     
-    public ResponseEntity<AccountsContactInfoDto> getContactInfoFallBack(Throwable throwable) {
-        AccountsContactInfoDto aidto  = new AccountsContactInfoDto();
-        aidto.setMessage("Dummy Message");
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(aidto);
-    }
+    // public ResponseEntity<AccountsContactInfoDto> getContactInfoFallBack(Throwable throwable) {
+    //     AccountsContactInfoDto aidto  = new AccountsContactInfoDto();
+    //     aidto.setMessage("Dummy Message");
+    //     return ResponseEntity
+    //             .status(HttpStatus.OK)
+    //             .body(aidto);
+    // }
 }
