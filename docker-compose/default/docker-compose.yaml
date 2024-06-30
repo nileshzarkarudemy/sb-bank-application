@@ -83,6 +83,17 @@ services:
       file: common-config.yaml
       service: network-deploy-service
 
+  prometheus:
+    image: prom/prometheus:v2.50.1
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    extends:
+      file: common-config.yaml
+      service: network-deploy-service
+
   grafana:
     image: grafana/grafana:11.0.0
     container_name: grafana    
@@ -96,22 +107,11 @@ services:
       - sh
       - -euc
       - |
-        mkdir -p /etc/grafana/provisioning/datasources
-        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
-        apiVersion: 1
-        datasources:
-          - name: Loki
-            type: loki
-            access: proxy
-            url: http://gateway:3100
-            jsonData:
-              httpHeaderName1: "X-Scope-OrgID"
-            secureJsonData:
-              httpHeaderValue1: "tenant1"
-        EOF
         /run.sh
     ports:
       - "3000:3000"
+    volumes:
+      - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml  
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
       interval: 10s
@@ -208,7 +208,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "nileshzarkar/configserver:s11"
+    image: "nileshzarkar/configserver:s11-metrics"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -225,7 +225,7 @@ services:
       OTEL_SERVICE_NAME: "configserver"
 
   eurekaserver:
-    image: "nileshzarkar/eureka:s11"
+    image: "nileshzarkar/eureka:s11-metrics"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -246,7 +246,7 @@ services:
       OTEL_SERVICE_NAME: "eurekaserver"
 
   accounts:
-    image: "nileshzarkar/accounts:s11"
+    image: "nileshzarkar/accounts:s11-metrics"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -268,7 +268,7 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "nileshzarkar/loans:s11"
+    image: "nileshzarkar/loans:s11-metrics"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -290,7 +290,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "nileshzarkar/cards:s11"
+    image: "nileshzarkar/cards:s11-metrics"
     container_name: cards-ms
     ports:
       - "9000:9000"
@@ -312,7 +312,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "nileshzarkar/gatewayserver:s11"
+    image: "nileshzarkar/gatewayserver:s11-metrics"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
