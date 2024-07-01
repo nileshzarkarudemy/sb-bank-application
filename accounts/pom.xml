@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<otelVersion>1.33.4</otelVersion>
 	</properties>
 
 	<dependencies>
@@ -58,6 +59,12 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.opentelemetry.javaagent</groupId>
+			<artifactId>opentelemetry-javaagent</artifactId>
+			<version>${otelVersion}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>	
@@ -67,6 +74,7 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -111,7 +119,7 @@
 				<version>3.4.1</version>
 				<configuration>
 				  <to>
-					<image>nileshzarkar/${project.artifactId}:s11-metrics</image>
+					<image>nileshzarkar/${project.artifactId}:s11-otel-tracing</image>
 				  </to>
 				</configuration>
 			  </plugin>

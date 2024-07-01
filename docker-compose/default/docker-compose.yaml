@@ -94,6 +94,19 @@ services:
       file: common-config.yaml
       service: network-deploy-service
 
+  tempo:
+    image: grafana/tempo:2.4.2
+    container_name: tempo
+    command: -config.file /etc/tempo-config.yml
+    ports:
+      - "3110:3100"
+      - "4317:4317"
+    volumes:
+      - ./tempo.yml:/etc/tempo-config.yml
+    extends:
+      file: common-config.yaml
+      service: network-deploy-service
+
   grafana:
     image: grafana/grafana:11.0.0
     container_name: grafana    
@@ -208,7 +221,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "nileshzarkar/configserver:s11-metrics"
+    image: "nileshzarkar/configserver:s11-otel-tracing"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -222,10 +235,11 @@ services:
       file: common-config.yaml
       service: microservice-base-config
     environment:
+      SPRING_APPLICATION_NAME: "configserver"
       OTEL_SERVICE_NAME: "configserver"
 
   eurekaserver:
-    image: "nileshzarkar/eureka:s11-metrics"
+    image: "nileshzarkar/eureka:s11-otel-tracing"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -246,7 +260,7 @@ services:
       OTEL_SERVICE_NAME: "eurekaserver"
 
   accounts:
-    image: "nileshzarkar/accounts:s11-metrics"
+    image: "nileshzarkar/accounts:s11-otel-tracing"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -261,14 +275,15 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
-    environment:
-      SPRING_APPLICATION_NAME: "accounts"
     extends:
       file: common-config.yaml
       service: microservice-eureka-config
+    environment:
+      SPRING_APPLICATION_NAME: "accounts"
+      OTEL_SERVICE_NAME: "accounts"
 
   loans:
-    image: "nileshzarkar/loans:s11-metrics"
+    image: "nileshzarkar/loans:s11-otel-tracing"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -283,14 +298,15 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
-    environment:
-      SPRING_APPLICATION_NAME: "loans"
     extends:
       file: common-config.yaml
-      service: microservice-eureka-config
+      service: microservice-eureka-config      
+    environment:
+      SPRING_APPLICATION_NAME: "loans"
+      OTEL_SERVICE_NAME: "loans"
 
   cards:
-    image: "nileshzarkar/cards:s11-metrics"
+    image: "nileshzarkar/cards:s11-otel-tracing"
     container_name: cards-ms
     ports:
       - "9000:9000"
@@ -305,14 +321,16 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
-    environment:
-      SPRING_APPLICATION_NAME: "cards"
     extends:
       file: common-config.yaml
-      service: microservice-eureka-config
+      service: microservice-eureka-config      
+    environment:
+      SPRING_APPLICATION_NAME: "cards"
+      OTEL_SERVICE_NAME: "cards"      
+
 
   gatewayserver:
-    image: "nileshzarkar/gatewayserver:s11-metrics"
+    image: "nileshzarkar/gatewayserver:s11-otel-tracing"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -323,11 +341,13 @@ services:
         condition: service_healthy
       cards:
         condition: service_healthy
-    environment:
-      SPRING_APPLICATION_NAME: "gatewayserver"
     extends:
       file: common-config.yaml
-      service: microservice-eureka-config
+      service: microservice-eureka-config        
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      OTEL_SERVICE_NAME: "gatewayserver"        
+
 
 networks:
   eazybank:

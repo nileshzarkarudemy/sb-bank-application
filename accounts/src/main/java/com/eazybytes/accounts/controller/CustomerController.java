@@ -36,14 +36,9 @@ public class CustomerController {
                                                                    @Pattern(regexp = "($|[0-9]{10})", message = "Mobile number should be 10 digits value") 
                                                                    String mobileNumber) { 
 
-        logger.info("eazyBank-correlation-id found: {} ", correlationId);
-        logger.trace("fetchCustomerDetails A TRACE Message");
-        logger.debug("fetchCustomerDetails A DEBUG Message");
-        logger.info("fetchCustomerDetails An INFO Message");
-        logger.warn("fetchCustomerDetails A WARN Message");
-         logger.error("fetchCustomerDetails An ERROR Message");
+        logger.debug("fetchCustomerDetails method start");
         CustomerDetailsDto customerDetailsDto = iCustomerService.fetchCustomerDetails(mobileNumber, correlationId);
-
+        logger.debug("fetchCustomerDetails method end");
         return ResponseEntity.status(HttpStatus.OK).body(customerDetailsDto);
     }
 
