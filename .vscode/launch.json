@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MessageApplication",
+            "request": "launch",
+            "mainClass": "com.eazybytes.message.MessageApplication",
+            "projectName": "message"
+        },
+        {
+            "type": "java",
             "name": "GatewayserverApplication",
             "request": "launch",
             "mainClass": "com.eazybytes.gatewayserver.GatewayserverApplication",
