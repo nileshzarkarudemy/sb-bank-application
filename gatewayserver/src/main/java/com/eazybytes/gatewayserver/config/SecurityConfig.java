@@ -45,10 +45,11 @@ public class SecurityConfig {
         return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
     }
 
-    @Bean
-    public ReactiveJwtDecoder jwtDecoder() {
-        return NimbusReactiveJwtDecoder.withJwkSetUri("http://localhost:7080/realms/master/protocol/openid-connect/certs").build();
-    }
+    // Activate while running in local dev workspace
+    // @Bean
+    // public ReactiveJwtDecoder jwtDecoder() {
+    //     return NimbusReactiveJwtDecoder.withJwkSetUri("http://localhost:7080/realms/master/protocol/openid-connect/certs").build();
+    // }
 
 
 
