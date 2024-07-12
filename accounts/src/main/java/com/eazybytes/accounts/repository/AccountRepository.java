@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Accounts, Long>{
+    
     Optional<Accounts> findByCustomerId(Long customerId);
 
     @Transactional
